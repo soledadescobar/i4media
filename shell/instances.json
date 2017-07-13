@@ -1,0 +1,8 @@
+{
+  "instances": [
+    {"ip": "http://10.128.0.15:5000", "name": "i4media-sentinel1"},
+    {"ip": "http://10.128.0.16:5000", "name": "i4media-sentinel2"},
+    {"ip": "http://10.128.0.17:5000", "name": "i4media-lookup1"},
+    {"ip": "http://10.128.0.18:5000", "name": "i4media-lookup2"}
+  ]
+}

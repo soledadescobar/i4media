@@ -12,7 +12,7 @@ class ShellApi(object):
     api = None
     queue = None
 
-    def __init__(self):
+    def __init__(self, target_kw='keywords'):
         self.params = {
             'term': '',
             'raw_query': '',
@@ -23,7 +23,7 @@ class ShellApi(object):
         }
         self.redis_on('10.128.0.11')
         self.getapikeys()
-        self.getkeywords()
+        self.getkeywords(target_kw)
         self.getactive()
         print("""
             -- ShellApi Object Created --
@@ -46,12 +46,12 @@ class ShellApi(object):
             raise RuntimeError("Failed to load Api Keys\n")
 
     # This will load the keywords file
-    def getkeywords(self):
+    def getkeywords(self, target):
         print("Loading Keywords from JSON File\n")
         with open('keywords.json', "r") as fl:
             ret = json.load(fl)
         print("Loading Keywords into ShellApi\n")
-        self.keywords = ret.get('keywords', False)
+        self.keywords = ret.get(target, False)
         if not self.keywords:
             raise RuntimeError("Failed to load keywords\n")
 

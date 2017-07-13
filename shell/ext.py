@@ -21,7 +21,7 @@ class ShellApi(object):
             'since_id': '',
             'max_id': ''
         }
-        self.redis_on()
+        self.redis_on('10.128.0.11')
         self.getapikeys()
         self.getkeywords()
         self.getactive()
@@ -63,8 +63,8 @@ class ShellApi(object):
         n = self.active.get('id', 0) + 1 if self.active else 0
         if n > 0:
             if len(self.apikeys) <= n:
-                print("APIKeys Exhausted. Starting from 0 in 1 minute...\n")
-                time.sleep(60)
+                print("APIKeys Exhausted. Starting from 0 in 15 minutes...\n")
+                time.sleep(900)
                 n = 0
         print("Returning next ApiKey[Index=%d]\n" % n)
         return {'id': n, 'api': self.apikeys[n]}
@@ -91,7 +91,6 @@ class ShellApi(object):
         try:
             res = self.api.GetSearch(**args)
         except:
-            print("EXCEPTION FOUND\n")
             print("Moving on to next ApiKey\n")
             self.getactive()
             return self.search(**args)
@@ -99,7 +98,7 @@ class ShellApi(object):
             return False
         return res
 
-    def searchkeyword(self, keyword, max_id=None):
+    def searchkeyword(self, keyword, max_id=None, actual=0, limit=10):
         terms = self.params.copy()
         terms.update(term=keyword)
         if max_id:
@@ -118,7 +117,10 @@ class ShellApi(object):
             self.queue.rpush('stream', json.dumps(status))
             ids.append(status.get('id'))
         ids = sorted(ids, key=int)
-        return self.searchkeyword(keyword, max_id=ids[0])
+        actual += 1
+        if actual >= limit:
+            return False
+        return self.searchkeyword(keyword, max_id=ids[0], actual=actual+1)
 
     def searchkeywords(self):
         print("Searching all the keywords\n")

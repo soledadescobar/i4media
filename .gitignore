@@ -1,0 +1,12 @@
+src/output.log
+src/config.ini
+src/*.pyc
+src/twistrea.pyc
+src/tsv/*
+src/__pycache__/*
+src/cache/*
+venv
+venv/*
+.idea
+.idea/
+dump.rdb

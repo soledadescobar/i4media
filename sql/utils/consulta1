@@ -1,0 +1,85 @@
+select
+	hashtags.text as group,
+	users.screen_name as name,
+	count(tweets.id) as value
+from tweets
+join users
+	on users.id_user = tweets.id_user
+join hashtags
+	on hashtags.id_tweet = tweets.id_tweet
+where
+	lower(users.screen_name) in 
+	('cfkargentina','stolbizer','randazzof','sergiomassa',
+	'gugalusto','ocampomartin83','elisacarrio','estebanbullrich',
+	'gladys_gonzalez')
+group by 1,2
+order by value desc
+limit 100
+
+
+select * from hashtags limit 100;
+
+
+select
+	hashtags.text as group,
+	users.screen_name as name,
+	count(tweets.id) as value
+from tweets
+join users
+	on users.id_user = tweets.id_user
+join hashtags
+	on hashtags.id_tweet = tweets.id_tweet
+where
+	lower(users.screen_name) in 
+	('cfkargentina','stolbizer','randazzof','sergiomassa',
+	'gugalusto','ocampomartin83','elisacarrio','estebanbullrich',
+	'gladys_gonzalez')
+group by 1,2
+order by value desc
+limit 100
+
+
+--En un hashtag, cuántas veces mencionaron a los screen names
+
+select 
+
+ht.text
+,um.screen_name
+,count(um.id_tweet)
+from hashtags ht
+left join user_mentions um on (um.id_tweet = ht.id_tweet)
+where
+	lower(um.screen_name) in 
+	('cfkargentina','stolbizer','randazzof','sergiomassa',
+	'gugalusto','ocampomartin83','elisacarrio','estebanbullrich',
+	'gladys_gonzalez')
+group by 1,2
+;
+
+select count(*) from hashtags;
+
+select count(*) from tweets;
+
+select count(*) from user_mentions;
+
+
+select count(*) from user_mentions
+join hashtags on (hashtags.id_tweet = user_mentions.id_tweet);
+
+
+
+select screen_name, count(*) from user_mentions
+where 1=1
+	--and lower(um.screen_name) in 
+	--('cfkargentina','stolbizer','randazzof','sergiomassa',
+	--'gugalusto','ocampomartin83','elisacarrio','estebanbullrich',
+	--'gladys_gonzalez')
+group by 1 order by 2 desc;
+
+
+
+select users.screen_name, user_mentions.screen_name, user_mentions.id_user_mentions, tweets.id_user from user_mentions
+join users on users.id_user = user_mentions.id_user_mentions
+join tweets on tweets.id_tweet = user_mentions.id_tweet;
+
+select * from user_mentions;

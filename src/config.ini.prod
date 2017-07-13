@@ -1,0 +1,43 @@
+[API]
+consumer_key = Gmfyhl7Gj7hR8QsoHXnac3T0G
+consumer_secret = bWg0aOtWEN4iIIkwFkuwI9WXpqegC4kxwj6T6au2cwV6m6FnBy
+access_token = 3343144691-amaGCBTVaeLpb5yelml70xWXArzo7r1kwMf1yRj
+access_token_secret = 9b6W2ZFHIWk7svW54gAslxSJ7CBWiAHOKR5RBQ3jKLsae
+stream = off
+stream_enable_keywords = yes
+stream_enable_user_ids = no
+poploop = on
+download_media = no
+download_folder = /tmp
+users_lookup = off
+ffs_sentinel = off
+keywords = @CFKArgentina,@ManesF
+langs = all
+user_ids = 138165725,1767948007
+entities = hashtags,media,urls,user_mentions,coordinates
+
+[RATES]
+users_lookup = 300
+friends_sentinel = 15
+
+[LIMITS]
+users_lookup = 100
+
+[PID]
+name = twistreapy
+dir = /tmp
+
+[DATABASE]
+use = yes
+engine = postgresql
+host = 104.154.237.215
+user = postgres
+pass = POd9GBlo7M9sECwE
+name = i4media_alpha
+
+[REDIS]
+host = 10.128.0.11
+port = 6379
+
+[LOG]
+file = output.log

@@ -98,11 +98,19 @@ class ShellApi(object):
             return False
         return res
 
-    def searchkeyword(self, keyword, max_id=None, actual=0, limit=10):
+    def searchkeyword(
+            self,
+            keyword,
+            max_id=None,
+            until=None,
+            actual=0,
+            limit=10):
         terms = self.params.copy()
         terms.update(term=keyword)
         if max_id:
             terms.update(max_id=max_id)
+        if until:
+            terms.update(until=until)
         search = self.search(**terms)
         if not search or len(search) <= 1:
             print("Search returned 0 results\n")
@@ -120,13 +128,13 @@ class ShellApi(object):
         actual += 1
         if actual >= limit:
             return False
-        return self.searchkeyword(keyword, max_id=ids[0], actual=actual+1)
+        return self.searchkeyword(keyword, max_id=ids[0], until=until, actual=actual, limit=limit)
 
-    def searchkeywords(self):
+    def searchkeywords(self, until=None, limit=10):
         print("Searching all the keywords\n")
         for k in self.keywords:
             print("Starting for keyword: %s\n" % k)
-            if not self.searchkeyword(k):
+            if not self.searchkeyword(k, until=until, limit=limit):
                 print("No more results for %s\n" % k)
                 continue
         print("Job seems to be finished\n")

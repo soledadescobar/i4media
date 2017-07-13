@@ -1,5 +1,5 @@
 {
-  "keywords": [
+  "keywords-all": [
    "#Patria", "@AliciaCastroAR", "@ArielSujarchuk", "@CFKArgentina", "@CarlosTomada", "@CarolinaPiparo",
     "@DiputadosFPV_pj", "@FerEspinozaOK", "@FernandoGray", "@FilmusDaniel", "@GPAlegre", "@GafiFuks",
     "@GugaLusto", "@GuillermoLipera", "@HugoYasky", "@JPDeJesusOK", "@JorgeFerraresi", "@JoseCampagnoli",
@@ -41,5 +41,85 @@
     "@moranmica", "@msierrafpv", "@nestorpitrola", "@nicolasdelcano", "@omarduclos", "@pablogarate", "@pablojavkin",
     "@patriciacobello", "@pietragallahora", "@robertosukerman", "@rodrigoacerda", "@rodriguezsaan", "@rominadelpla",
     "@rubencgrenada", "@santinardelli", "@sebachale", "@utreralaura", "@vilma_ripoll", "@waltercorreasoc"
+  ],
+ "keywords": [
+  "@patriciacobello", "@pietragallahora", "@robertosukerman", "@rodrigoacerda", "@rodriguezsaan", "@rominadelpla",
+  "@rubencgrenada", "@santinardelli", "@sebachale", "@utreralaura", "@vilma_ripoll", "@waltercorreasoc"
+ ],
+ "keywords-1": [
+  "@mariocafiero", "@mariomeoni", "@marujazama", "@metchecoin", "@mfmacha", "@michelipablo", "@mirtatundis", "@monschlotthauer",
+  "@moranmica", "@msierrafpv", "@nestorpitrola", "@nicolasdelcano", "@omarduclos", "@pablogarate", "@pablojavkin"
+ ],
+ "keywords-2": [
+  "@juancuruchet", "@juanfiorini", "@lauValonso", "@laureanors", "@leandroblancolp", "@lichuzeno", "@lisandrobonelli",
+  "@lucascrear", "@luisvivona", "@manuelac22", "@marcelo_sain", "@marceloosodiaz", "@marcos_dipalma", "@marianlopezGEN"
+ ],
+ "keywords-3": [
+  "@danyreich", "@diazzfernanda", "@donofriojorge", "@edutrasante", "@felipe_sola", "@fernandosolanas", "@fotermin",
+  "@fsaintout", "@gabgodoybb", "@gustavotraverso", "@haolivera", "@joserarteaga", "@juanabalmedina", "@juancjuarez11"
+  ],
+ "keywords-4": [
+  "@westmariano", "@_charlycardozo", "@adrianurreli", "@agapitoblanco", "@alecellillo", "@alexisguerrera1", "@andreadatri",
+  "@anitalmartinez", "@aprilelaura", "@buccabali", "@cbernazza", "@chinorosua", "@chipicastillo", "@daltonjauregui"
+  ],
+ "keywords-5": [
+  "@jpatriciomussi", "@larroqueandres", "@magariovero", "@marianorecalde", "@marquitospena", "@mayrasmendoza", "@minsaurralde",
+  "@nilda_garre", "@ocampomartin83", "@patobullrich", "@pau_oliveto", "@rossi_delfina", "@victorsmaria", "@wadodecorrido"
+  ],
+ "keywords-6": [
+  "@gracielaocana", "@granadosdulceok", "@grcarmonac", "@guillodietrich", "@gustavoflopez", "@gustavoposse", "@jorgemacri",
+  "@jpatriciomussi", "@larroqueandres", "@magariovero", "@marianorecalde", "@marquitospena", "@mayrasmendoza", "@minsaurralde"
+  ],
+ "keywords-7": [
+  "@lucreciamlc", "@marceloramal", "@marianorecalde", "@marianorosa2012", "@mariarosamuinos", "@matiastombolini", "@medinamn",
+  "@mpiccolomini", "@myriambregman", "@natuvilla", "@nicolasnuniez", "@pau_oliveto", "@raque", "@gladys_gonzalez",
+ ],
+ "keywords-8": [
+  "@gmilman", "@gmontenegro_ok", "@gracielaocana", "@guillermomadero", "@gustavoveraok", "@hectorpolino", "@hernanberisso",
+  "@itaihagman", "@jaicega", "@jfnosiglia", "@juancabandie", "@laflacarattoni", "@lauvelasco801", "@lehalperin", "@lpokoik"
+ ],
+ "keywords-9": [
+  "@castagnarom67", "@claucingo", "@damiansolanas", "@deperezvolpin", "@diputadosfpv_pj", "@ditulliojuli", "@ebisaro",
+  "@eflangan", "@estebanbullrich", "@fabiojquetglas", "@fsuarezlastra", "@gabicerru", "@giselamarziotta", "@gladys_gonzalez"
+  ],
+ "keywords-10": [
+ "@SebastianArtola", "@SeguridadBA", "@SergioMassa", "@SimonBoffelli", "@Stolbizer", "@TereGarciaOK", "@VascaBonaerense",
+ "@VeroIrizar", "@andyfreire", "@arialvarezpalma", "@aylibertad", "@barbibonelli", "@carmenpolledo", "@carobrandariz"
+  ],
+ "keywords-11": [
+ "@MoreauLeopoldo", "@NormaLopezSF", "@ParediJorge", "@Patmoyano", "@PereyraJulio", "@PrensaSarghini", "@RandazzoF",
+ "@RatnerAntonio", "@RomiUhrig", "@RovellaDiego", "@RoyLopezMolina", "@RussoNicolasOk", "@SandraParisYA", "@SebasGalmarini"
+  ],
+ "keywords-12": [
+ "@GelosoAna", "@GerezMajo", "@GiordanoGringo", "@GuillermoEscud1", "@HugoYasky", "@JimenaLpez4", "@LILIDEOLAVARRIA",
+  "@LaBancaJoven", "@LicDanielArroyo", "@MarianoPinedo", "@MarisolMerquel", "@MartinRosua", "@MicaFerrarom", "@MiguelBravetti"
+  ],
+ "keywords-13": [
+ "@alvarodlamadrid", "@80mfr", "@ADRIANACAPUANO1", "@AndreaCBosco", "@BLANCAHCANTERO", "@BozzanoGervasio", "@CarolinaPiparo",
+  "@DanielaLeonTW", "@DelmonteFlavia", "@DipOscarRomero", "@DrRobertoCosta", "@EmiBalbin", "@FrancoIngrassia", "@GabinoTapia9"
+  ]
+ "keywords-14": [
+ "@MaguiTiesso", "@MontenegroViki", "@NerinaNeumann", "@PabloAnzalone", "@Patriciodc", "@Pimpi_Colombo", "@SantoroLeandro",
+    "@SergSallustio", "@SergioAbrevaya", "@TotyFlores", "@Vsiley", "@ac_carrizo", "@aforchieri", "@agusabadie", "@alejandrojg"
+  ],
+ "keywords-15": [
+ "@FranCafiero", "@GastonBruno", "@GenovesiUCR", "@HernanLReyes", "@InesGorbea", "@JnmLopez", "@JonathanThea",
+  "@JorgeTaiana", "@JosefaMendo", "@LaNegraVerdu", "@Laura_Marrone", "@Lozano_Claudio", "@LuchoBugallo", "@M_Campagnoli"
+  ],
+ "keywords-16": [
+ "@AdriCCaceres", "@AdrianaGhitia", "@Ale_Bodart", "@ArcenHernan", "@BarbagelataM", "@CRomeroOK", "@CarlosHeller",
+  "@CesarGlat", "@ConradoReinkeOk", "@DanielScioli", "@ElisaCarrio", "@EnriqueViale", "@FerIglesias", "@Florenciarietto"
+  ],
+ "keywords-17": [
+ "@SergioBerniARG", "@SergioMassa", "@Stolbizer", "@SusanaMalcorra", "@TotyFlores", "@WalterFesta_",
+ "@alvarezsi", "@anibarra", "@cambiemos", "@ccastellanoSI", "@danielscioli", "@ditulliojuli"
+  ],
+ "keywords-18": [
+ "@Kicillofok", "@M_Campagnoli", "@ManesF", "@MariaLujan_Rey", "@MoreauLeopoldo", "@OmarPlaini", "@PJZurro",
+    "@PereyraJulio", "@PrensaMadres", "@RandazzoF", "@RossiAgustinOK", "@Sabbatella", "@SantoroLeandro"
+  ],
+ "keywords-18": [
+  "@DiputadosFPV_pj", "@FerEspinozaOK", "@FernandoGray", "@FilmusDaniel", "@GPAlegre", "@GafiFuks",
+  "@GugaLusto", "@GuillermoLipera", "@HugoYasky", "@JPDeJesusOK", "@JorgeFerraresi", "@JoseCampagnoli"
   ]
 }

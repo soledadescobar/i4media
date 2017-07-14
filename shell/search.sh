@@ -7,6 +7,7 @@ do
  e) END=$OPTARG;;
  d) DATE=$OPTARG;;
  c) COUNT=$OPTARG;;
+ m) METHOD=$OPTARG;;
  esac
 done
 if [ -z "$END" ]
@@ -25,9 +26,15 @@ then
 else
     : CMDCOUNT="";
 fi
+if [ ! -z "$METHOD" ]
+then
+    : CMDMETHOD="--method $METHOD";
+else
+    : CMDMETHOD="";
+fi
 
 source ../venv/bin/activate
 for i in $(seq $START $END); do
-    echo "python search.py --keywords keywords-$i $CMDDATE $CMDCOUNT";
-    python search.py --keywords keywords-$i $CMDDATE $CMDCOUNT;
+    echo "echo python search.py --keywords keywords-$i $CMDMETHOD $CMDDATE $CMDCOUNT > last_cmd.log" ;
+    python search.py --keywords keywords-$i $CMDMETHOD $CMDDATE $CMDCOUNT;
 done

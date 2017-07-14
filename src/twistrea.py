@@ -870,9 +870,9 @@ class Bridge(object):
                     group, subgroup, name, value = ('' for i in range(4))
                     for k, v in list(row.items()):
                         if k == 'group':
-                            group = v.replace(' ', '') if v else 'nogroup'
-                        elif k == 'subgroup' and v != '-':
-                            subgroup = v.replace(' ', '') if v else 'nosubgroup'
+                            group = v.replace(' ', '') if v else 'NoAgrupados'
+                        elif k == 'subgroup' and v and v != '-':
+                            subgroup = v.replace(' ', '') if v else 'SubGrupoNoValido'
                         elif k == 'value':
                             value = '%s' % str(v)
                         elif k == 'name':

@@ -163,7 +163,7 @@ class ShellApi(object):
         actual += 1
         if actual >= limit:
             return False
-        return self.searchkeyword(keyword, max_id=ids[0], until=until, actual=actual, limit=limit)
+        return self.searchkeyword(keyword, method=method, max_id=ids[0], until=until, actual=actual, limit=limit)
 
     def searchkeywords(self, until=None, method='search', limit=10):
         print("Searching all the keywords with method %s\n" % method)

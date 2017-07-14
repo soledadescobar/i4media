@@ -120,12 +120,12 @@ class ShellApi(object):
     def searchkeyword(
             self,
             keyword,
-            method='',
+            method,
             max_id=None,
             until=None,
             actual=0,
             limit=10):
-        terms = getattr(self, 'params_%s' % method, None)().copy()
+        terms = getattr(self, 'params_%s' % method, self.params)().copy()
         if not terms:
             raise RuntimeError("Parameters for method %s not found" % method)
         if 'term' in terms:
@@ -165,7 +165,7 @@ class ShellApi(object):
             return False
         return self.searchkeyword(keyword, method=method, max_id=ids[0], until=until, actual=actual, limit=limit)
 
-    def searchkeywords(self, until=None, method='search', limit=10):
+    def searchkeywords(self, method, until=None, limit=10):
         print("Searching all the keywords with method %s\n" % method)
         for k in self.keywords:
             print("Starting for keyword: %s\n" % k)

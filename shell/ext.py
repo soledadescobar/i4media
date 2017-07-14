@@ -7,6 +7,7 @@ import redis
 class ShellApi(object):
     apikeys = []
     keywords = []
+    target = ''
     params = {}
     active = {}
     api = None
@@ -23,7 +24,8 @@ class ShellApi(object):
         }
         self.redis_on('10.128.0.11')
         self.getapikeys()
-        self.getkeywords(target_kw)
+        self.target = target_kw
+        self.getkeywords()
         self.getactive()
         print("""
             -- ShellApi Object Created --
@@ -46,12 +48,12 @@ class ShellApi(object):
             raise RuntimeError("Failed to load Api Keys\n")
 
     # This will load the keywords file
-    def getkeywords(self, target):
+    def getkeywords(self):
         print("Loading Keywords from JSON File\n")
         with open('keywords.json', "r") as fl:
             ret = json.load(fl)
-        print("Loading Keywords into ShellApi\n")
-        self.keywords = ret.get(target, False)
+        print("Loading %s Keywords into ShellApi\n" % self.target)
+        self.keywords = ret.get(self.target, False)
         if not self.keywords:
             raise RuntimeError("Failed to load keywords\n")
 
@@ -86,7 +88,7 @@ class ShellApi(object):
             if v == '':
                 args[k] = None
         print(
-            "Trying to search %s\n" % args
+            "Trying to search keyword: %s\n" % args.get('term', 'no terms')
         )
         try:
             res = self.api.GetSearch(**args)
@@ -98,20 +100,53 @@ class ShellApi(object):
             return False
         return res
 
+    def timeline(self, **args):
+        for k, v in list(args.items()):
+            if v == '':
+                args[k] = None
+        print(
+            "Trying to get timeline \n%s" % args
+        )
+        try:
+            res = self.api.GetUserTimeline(**args)
+        except:
+            print("Moving on to next ApiKey\n")
+            self.getactive()
+            return self.search(**args)
+        if not len(res):
+            return False
+        return res
+
     def searchkeyword(
             self,
             keyword,
+            method='',
             max_id=None,
             until=None,
             actual=0,
             limit=10):
-        terms = self.params.copy()
-        terms.update(term=keyword)
-        if max_id:
+        terms = getattr(self, 'params_%s' % method, None)().copy()
+        if not terms:
+            raise RuntimeError("Parameters for method %s not found" % method)
+        if 'term' in terms:
+            print("Updating Term")
+            terms.update(term=keyword)
+        if 'screen_name' in terms:
+            print("Updating Screen Name")
+            terms.update(screen_name=keyword)
+        if max_id and 'max_id' in terms:
+            print("Updating Max ID")
             terms.update(max_id=max_id)
-        if until:
+        if until and 'until' in terms:
+            print("Updating Until Date")
             terms.update(until=until)
-        search = self.search(**terms)
+        print(terms)
+        if method == 'search':
+            search = self.search(**terms)
+        elif method == 'timeline':
+            search = self.timeline(**terms)
+        else:
+            raise NameError("Method %s Not Found" % method)
         if not search or len(search) <= 1:
             print("Search returned 0 results\n")
             return False  # Returning false when there is no more results
@@ -130,11 +165,33 @@ class ShellApi(object):
             return False
         return self.searchkeyword(keyword, max_id=ids[0], until=until, actual=actual, limit=limit)
 
-    def searchkeywords(self, until=None, limit=10):
-        print("Searching all the keywords\n")
+    def searchkeywords(self, until=None, method='search', limit=10):
+        print("Searching all the keywords with method %s\n" % method)
         for k in self.keywords:
             print("Starting for keyword: %s\n" % k)
-            if not self.searchkeyword(k, until=until, limit=limit):
+            if not self.searchkeyword(k, method=method, until=until, limit=limit):
                 print("No more results for %s\n" % k)
                 continue
         print("Job seems to be finished\n")
+
+    def params_search(self):
+        return {
+            'term': '',
+            'raw_query': '',
+            'since': '',
+            'until': '',
+            'since_id': '',
+            'max_id': ''
+        }
+
+    def params_timeline(self):
+        return {
+            'user_id': '',
+            'screen_name': '',
+            'since_id': '',
+            'max_id': '',
+            'include_rts': '',
+            'exclude_replies': '',
+            'count': 200,
+            'trim_user': False
+        }

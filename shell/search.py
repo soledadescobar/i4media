@@ -18,8 +18,12 @@ parser.add_argument(
     '--limit',
     help="Limit of returned tweets / 100. Default 10, will return 1000 tweets",
     default=10)
+parser.add_argument(
+    '--method',
+    help="Specify wich methods and parameters should be used.\nDefault: search.\nAvailable: search, timeline",
+    default='search')
 args = parser.parse_args()
 print(args)
 
 api = ShellApi(args.keywords)
-api.searchkeywords(until=args.until, limit=args.limit)
+api.searchkeywords(until=args.until, limit=args.limit, method=args.method)

@@ -42,10 +42,6 @@
     "@patriciacobello", "@pietragallahora", "@robertosukerman", "@rodrigoacerda", "@rodriguezsaan", "@rominadelpla",
     "@rubencgrenada", "@santinardelli", "@sebachale", "@utreralaura", "@vilma_ripoll", "@waltercorreasoc"
   ],
- "keywords": [
-  "@patriciacobello", "@pietragallahora", "@robertosukerman", "@rodrigoacerda", "@rodriguezsaan", "@rominadelpla",
-  "@rubencgrenada", "@santinardelli", "@sebachale", "@utreralaura", "@vilma_ripoll", "@waltercorreasoc"
- ],
  "keywords-1": [
   "@mariocafiero", "@mariomeoni", "@marujazama", "@metchecoin", "@mfmacha", "@michelipablo", "@mirtatundis", "@monschlotthauer",
   "@moranmica", "@msierrafpv", "@nestorpitrola", "@nicolasdelcano", "@omarduclos", "@pablogarate", "@pablojavkin"
@@ -121,5 +117,9 @@
  "keywords-19": [
   "@DiputadosFPV_pj", "@FerEspinozaOK", "@FernandoGray", "@FilmusDaniel", "@GPAlegre", "@GafiFuks",
   "@GugaLusto", "@GuillermoLipera", "@HugoYasky", "@JPDeJesusOK", "@JorgeFerraresi", "@JoseCampagnoli"
-  ]
+  ],
+ "keywords-20": [
+  "@patriciacobello", "@pietragallahora", "@robertosukerman", "@rodrigoacerda", "@rodriguezsaan", "@rominadelpla",
+  "@rubencgrenada", "@santinardelli", "@sebachale", "@utreralaura", "@vilma_ripoll", "@waltercorreasoc"
+ ]
 }

@@ -867,12 +867,12 @@ class Bridge(object):
                 ret += '%s,\n' % base
                 #for k, v in [row.items() for row in res]:
                 for row in res:
-                    group, subgroup, name, value = ''
+                    group, subgroup, name, value = ('' for i in range(4))
                     for k, v in list(row.items()):
                         if k == 'group':
-                            group = v
-                        elif k == 'subgroup':
-                            subgroup = v
+                            group = v.replace(' ', '') if v else 'nogroup'
+                        elif k == 'subgroup' and v != '-':
+                            subgroup = v.replace(' ', '') if v else 'nosubgroup'
                         elif k == 'value':
                             value = '%s' % str(v)
                         elif k == 'name':
@@ -882,9 +882,9 @@ class Bridge(object):
                     if name and not value:
                         value = '0'
                     if subgroup and group:
-                        ret += '%s.%s.%s.%s,%s' % (base, group, subgroup, name, value)
+                        ret += '%s.%s.%s.%s,%s\n' % (base, group, subgroup, name, value)
                     elif group:
-                        ret += '%s.%s.%s,%s' % (base, group, name, value)
+                        ret += '%s.%s.%s,%s\n' % (base, group, name, value)
 
             else:
                 ret = 'Query not found'

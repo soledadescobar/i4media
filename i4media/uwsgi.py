@@ -4,5 +4,6 @@ from .restapi import RestApiBridge
 
 rest = RestApiBridge()
 rest.apps()
-app = rest.app
+
+application = rest.app
 

@@ -1,10 +1,8 @@
-sudo apt update
-sudo apt install -y python-pip virtualenv tmux
-#git clone https://gascarcella@bitbucket.org/pstsrl/twistreapy.git
-#cd twistreapy/
-virtualenv venv
-source venv/bin/activate
+apt update
+apt install -y python-pip python-systemd
 pip install -r requirements.txt
-cd src/
-cp config.ini.prod config.ini
+cp -f i4media-twitter.sh /etc/init.d/i4media-twitter.sh
+chmod +755 /etc/init.d/i4media-twitter.sh
+systemctl daemon-reload
+service i4media-twitter start
 exit

@@ -1,4 +1,0 @@
-{
-    "search-tweets": "https://api.twitter.com/1.1/search/tweets.json",
-    "search-users": "https://api.twitter.com/1.1/users/lookup.json"
-}

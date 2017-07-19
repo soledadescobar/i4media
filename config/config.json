@@ -1,0 +1,48 @@
+{
+  "updater": {
+    "protocol": "http",
+    "host": "10.128.0.20",
+    "port": "80",
+    "url": "updater/main.lst",
+    "user": "gabriel",
+    "pass": "gabriel"
+  },
+  "redis": {
+    "host": "localhost",
+    "port": "6379",
+    "user": "",
+    "pass": ""
+  },
+  "bridge": {
+    "host": "0.0.0.0",
+    "port": "5000"
+  },
+  "db": {
+    "engine": "postgres",
+    "user": "pst",
+    "pass": "bP9GZY3GXz4ePrPX",
+    "name": "i4media_phase1",
+    "host": "104.197.148.208"
+  },
+  "log": {
+    "file": "output.log",
+    "level": "debug"
+  },
+  "global": {
+    "entities": ["hashtags", "media", "urls", "user_mentions", "coordinates"],
+    "ratesleep": "False"
+  },
+  "config": {
+    "keywords": "config/keywords.json",
+    "apikeys": "config/apikeys.json",
+    "queries": "config/queries.json",
+    "tracks": "config/tracks.json"
+  },
+  "stream": {
+    "langs": ["all"],
+    "key": "keywords-1",
+    "api": "key-7",
+    "track": "list-1",
+    "pushto": "stream"
+  }
+}

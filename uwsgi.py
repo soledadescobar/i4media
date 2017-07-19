@@ -1,4 +1,4 @@
-from .logger import *
+from i4media.logger import *
 import i4media.restapi
 
 

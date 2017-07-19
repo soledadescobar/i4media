@@ -89,7 +89,7 @@ class RestApiBridge(Bridge):
                     ret[c][k] = v
                 c += 1
         else:
-            ret['error'] = True
+            ret = {'error': True}
         if len(ret) <= 1:
             ret = ret[0]
         self.cache_write(query, 'query', ret)
@@ -149,7 +149,7 @@ class RestApiBridge(Bridge):
                 ret.append(arr)
             self.cache_write(query, 'json', ret)
         else:
-            ret['error'] = True
+            ret = {'error': True}
         return self.flask.jsonify(json.dumps(ret))
 
     def get_flare_v1(self, query, headers='id,value', base='flare'):

@@ -10,6 +10,8 @@ import dbext
 # Bridge Extension for RestAPI Service ##
 class RestApiBridge(Bridge):
     def apps(self):
+        super(RestApiBridge, self).apps()
+
         @self.app.route("/get/query/<query>")
         def get_query(query):
             return self.get_query(query)
@@ -29,10 +31,6 @@ class RestApiBridge(Bridge):
         @self.app.route("/get/flare/nobase/<query>")
         def get_flare_nobase(query):
             return self.get_flare_v1(query, base=None)
-
-    def run(self):
-        self.apps()
-        self.runserver()
 
     @staticmethod
     def query_json(query):

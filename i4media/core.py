@@ -1,10 +1,14 @@
-from .config import *
 import redis
 import logging
 import time
 import multiprocessing as mp
 import flask
 import twitter
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+
+from .config import *
 
 
 # Bridge Object ##
@@ -12,6 +16,7 @@ class Bridge(object):
     app = None
     services = []
     flask = None
+    updater_request_status = 0
 
     def __init__(self):
         # Load Needed Flask Functions for Bridge Extensions
@@ -19,13 +24,76 @@ class Bridge(object):
         self.app = flask.Flask(__name__)
 
     def apps(self):
-        @self.app.route("/status")
-        def status():
-            return flask.Response('status')
+        @self.app.route("/update/trigger")
+        def updater():
+            return self.updater()
 
     def start(self):
         self.apps()
         self.app.run(host=BRIDGE_HOST)
+
+    def updater(self):
+        logging.info('Updater Started')
+        r = self._updater_request(UPDATER_URL)
+        if r:
+            logging.debug('Updater lst file received')
+            self._updater_lst(r.json())
+
+    def _updater_lst(self, lst):
+        errors = []
+        for fi, uri in list(lst.items()):
+            r = self._updater_request(uri)
+            if not r:
+                errors.append((
+                    self.updater_request_status,
+                    fi,
+                    uri
+                ))
+                continue
+            if not self._updater_json_write(fi, r.json()):
+                errors.append((
+                    None,
+                    fi,
+                    r.json()
+                ))
+                logging.error(
+                    "!!!THE FILE %s MAY BE CORRUPTED OR MISSING!!!" % fi.upper()
+                )
+                continue
+        if len(errors):
+            logging.warning('%d errors found.' % len(errors))
+
+    def _updater_request(self, _url):
+        r = requests.get(
+            "%s://%s:%s/%s" % (
+                UPDATER_PROTOCOL,
+                UPDATER_HOST,
+                UPDATER_PORT,
+                _url
+            ),
+            auth=HTTPBasicAuth(
+                UPDATER_USER,
+                UPDATER_PASS
+            ),
+            timeout=60
+        )
+        if r.status_code == 200:
+            return r
+        else:
+            self.updater_request_status = r.status_code
+            return False
+
+    @staticmethod
+    def _updater_json_write(_file, _json):
+        try:
+            with open(
+                '%s/config/%s' % (BASE_DIR, _file),
+                "w"
+            ) as _cfg_file:
+                json.dump(_json, _cfg_file)
+        except:
+            return False
+        return True
 
 
 class Service(object):

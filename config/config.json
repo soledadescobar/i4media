@@ -1,4 +1,12 @@
 {
+  "updater": {
+    "protocol": "http",
+    "host": "10.128.0.20",
+    "port": "80",
+    "url": "updater/main.lst",
+    "user": "gabriel",
+    "pass": "gabriel"
+  },
   "redis": {
     "host": "localhost",
     "port": "6379",
@@ -6,14 +14,15 @@
     "pass": ""
   },
   "bridge": {
-    "host": "0.0.0.0"
+    "host": "0.0.0.0",
+    "port": "5000"
   },
   "db": {
     "engine": "postgres",
-    "user": "postgres",
-    "pass": "gorila38",
-    "name": "twistreapy",
-    "host": "localhost"
+    "user": "pst",
+    "pass": "bP9GZY3GXz4ePrPX",
+    "name": "i4media_phase1",
+    "host": "104.197.148.208"
   },
   "log": {
     "file": "output.log",

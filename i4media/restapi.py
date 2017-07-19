@@ -3,7 +3,7 @@ import os
 import datetime
 import json
 # i4media Imports
-from core import Bridge
+from .core import *
 import dbext
 
 
@@ -26,11 +26,16 @@ class RestApiBridge(Bridge):
         def get_flare_v1(query):
             return self.get_flare_v1(query)
 
+        @self.app.route("/get/flare/nobase/<query>")
+        def get_flare_nobase(query):
+            return self.get_flare_v1(query, base=None)
+
     def run(self):
         self.apps()
         self.runserver()
 
-    def query_json(self, query):
+    @staticmethod
+    def query_json(query):
         with open('%s/%s' % (PROJECT_ROOT, CONFIG_QUERIES)) as js:
             qs = json.load(js)
         if query in qs:
@@ -40,7 +45,8 @@ class RestApiBridge(Bridge):
 
     # Queries Cache Control Methods #
     # This will try to read a cache file for the specified query #
-    def cache_read(self, query, ext):
+    @staticmethod
+    def cache_read(query, ext):
         name = '%s/cache/%s.%s' % (PROJECT_ROOT, query, ext)
         try:
             mtime = datetime.datetime.fromtimestamp(os.path.getmtime(name))
@@ -56,7 +62,8 @@ class RestApiBridge(Bridge):
             return False
 
     # This will write the query result to cache file #
-    def cache_write(self, query, ext, ret):
+    @staticmethod
+    def cache_write(query, ext, ret):
         name = '%s/cache/%s.%s' % (PROJECT_ROOT, query, ext)
         try:
             with open(name, "w") as cache:
@@ -147,7 +154,7 @@ class RestApiBridge(Bridge):
             ret['error'] = True
         return self.flask.jsonify(json.dumps(ret))
 
-    def get_flare_v1(self, query):
+    def get_flare_v1(self, query, headers='id,value', base='flare'):
         cache = self.cache_read(query, 'flare')
         if cache:
             return self.flask.Response\
@@ -162,17 +169,16 @@ class RestApiBridge(Bridge):
             if len(res) < 1:
                 return 'None'
             # FLARE START #
-            base = 'flare'
-            ret = 'id,value\n'
-            ret += '%s,\n' % base
+            ret = '%s\n' % headers if headers else ''
+            ret += '%s,\n' % base if base else ''
             # for k, v in [row.items() for row in res]:
             for row in res:
                 group, subgroup, name, value = ('' for i in range(4))
                 for k, v in list(row.items()):
                     if k == 'group':
-                        group = v.replace(' ', '') if v else 'NoAgrupados'
+                        group = v.replace(' ', '') if v else 'NG'
                     elif k == 'subgroup' and v and v != '-':
-                        subgroup = v.replace(' ', '') if v else 'SubGrupoNoValido'
+                        subgroup = v.replace(' ', '') if v else 'NSG'
                     elif k == 'value':
                         value = '%s' % str(v)
                     elif k == 'name':
@@ -181,10 +187,14 @@ class RestApiBridge(Bridge):
                     continue
                 if name and not value:
                     value = '0'
-                if subgroup and group:
+                if base and subgroup and group:
                     ret += '%s.%s.%s.%s,%s\n' % (base, group, subgroup, name, value)
-                elif group:
+                elif base and group:
                     ret += '%s.%s.%s,%s\n' % (base, group, name, value)
+                elif subgroup and group:
+                    ret += '%s.%s.%s,%s\n' % (group, subgroup, name, value)
+                elif group:
+                    ret += '%s.%s,%s\n' % (group, name, value)
         else:
             ret = 'Query not found'
         self.cache_write(query, 'csv', ret)

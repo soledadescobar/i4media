@@ -8,9 +8,10 @@ import time
 
 import i4media.core
 import i4media.streaming
+import i4media.restapi
 
 
-LOG_FILENAME = "/tmp/i4media-twitter.log"
+LOG_FILENAME = "/tmp/i4media.log"
 LOG_LEVEL = logging.DEBUG
 
 parser = argparse.ArgumentParser(description='i4Media-twitter Service Controller')
@@ -19,7 +20,13 @@ parser.add_argument(
     '--stream',
     default=False,
     action='store_true',
-    help='Starts a Streaming Service')
+    help='Starts a Streaming Service & Bridge')
+parser.add_argument(
+    '-r',
+    '--rest',
+    default=False,
+    action='store_true',
+    help='Starts REST Api (Single')
 
 parser.add_argument("-l", "--log", help="file to write log to (default '%s')" % LOG_FILENAME)
 
@@ -35,28 +42,22 @@ handler = logging.handlers.TimedRotatingFileHandler(LOG_FILENAME, when="midnight
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
-
-
-class MyLogger(object):
-        def __init__(self, logger, level):
-                """Needs a logger and a logger level."""
-                self.logger = logger
-                self.level = level
-
-        def write(self, message):
-                # Only log if there is a message (not just a new line)
-                if message.rstrip() != "":
-                        self.logger.log(self.level, message.rstrip())
-
-
-sys.stdout = MyLogger(logger, logging.INFO)
-sys.stderr = MyLogger(logger, logging.ERROR)
+# STDOUT
+ch = logging.StreamHandler(sys.stdout)
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 
 if __name__ == '__main__':
     p = i4media.core.Process()
     services = []
     if args.stream:
-        p.add('streaming', i4media.streaming.StreamingService().stream())
-        p.add('bridge', i4media.streaming.StreamingBridge().start())
+        services.append(i4media.streaming.StreamingService())
+        p.add('streaming', services[-1].stream)
+        services.append(i4media.streaming.StreamingBridge())
+        p.add('bridge', services[-1].start)
+    if args.rest:
+        services.append(i4media.restapi.RestApiBridge())
+        p.add('rest', services[-1].start)
     p.start()

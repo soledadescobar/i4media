@@ -1,18 +1,18 @@
 #!/bin/sh
 
 ### BEGIN INIT INFO
-# Provides:          i4media-twitter
+# Provides:          i4media-stream
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: i4media twitter tool
-# Description:       Services Provided: Streaming, Push, Sentinel, Lookup, Updater
+# Short-Description: i4media streaming tool
+# Description:       Services Provided: Streaming, Updater, Bridge (5501)
 ### END INIT INFO
 
 DIR=/home/gabriel/pst/i4media
 DAEMON=$DIR/control.py
-DAEMON_NAME=i4media-twitter
+DAEMON_NAME=i4media-stream
 DAEMON_OPTS="--stream"
 DAEMON_USER=root
 

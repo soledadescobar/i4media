@@ -29,7 +29,7 @@ class Bridge(object):
             self.app,
             resources={
                 r"/get/*": {
-                    "origins": "i4.media"}})
+                    "origins": "*"}})
         # WTF_CSRF_SECRET_KEY = 'TOKEN'
         # self.csrf = CSRFProtect(self.app)
 

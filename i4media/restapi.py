@@ -12,6 +12,13 @@ class RestApiBridge(Bridge):
     def apps(self):
         super(RestApiBridge, self).apps()
 
+        """
+        @self.csrf.exempt
+        @self.app.route("/generate/token")
+        def generate_token():
+            self.csrf.generate_csrf()
+            return self.app.jsonify({'status': 'success'})
+        """
         @self.app.route("/get/query/<query>")
         def get_query(query):
             return self.get_query(query)

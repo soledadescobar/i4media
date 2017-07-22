@@ -3,6 +3,8 @@ import logging
 import time
 import multiprocessing as mp
 import flask
+from flask_cors import CORS
+# from flask_wtf.csrf import CSRFProtect
 import twitter
 import requests
 from requests.auth import HTTPBasicAuth
@@ -16,14 +18,23 @@ class Bridge(object):
     app = None
     services = []
     flask = None
+    # csrf = None
     updater_request_status = 0
 
     def __init__(self):
         # Load Needed Flask Functions for Bridge Extensions
         self.flask = flask
         self.app = flask.Flask(__name__)
+        CORS(
+            self.app,
+            resources={
+                r"/get/*": {
+                    "origins": "i4.media"}})
+        # WTF_CSRF_SECRET_KEY = 'TOKEN'
+        # self.csrf = CSRFProtect(self.app)
 
     def apps(self):
+        # @self.csrf.exempt
         @self.app.route("/update/trigger")
         def updater():
             return self.updater()

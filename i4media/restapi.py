@@ -27,6 +27,10 @@ class RestApiBridge(Bridge):
         def get_tsv(query):
             return self.get_tsv(query)
 
+        @self.app.route("/get/json/cascade/<query>")
+        def get_json_cascade(query):
+            return self.get_json_cascade(query)
+
         @self.app.route("/get/json/<query>")
         def get_json(query):
             return self.get_json(query)
@@ -155,6 +159,79 @@ class RestApiBridge(Bridge):
                     arr[k] = v
                 ret.append(arr)
             self.cache_write(query, 'json', ret)
+        else:
+            ret = {'error': True}
+        return self.flask.jsonify(json.dumps(ret))
+
+    def get_json_cascade(self, query):
+        cache = self.cache_read(query, 'json')
+        if cache:
+            return self.flask.jsonify(json.dumps(cache))
+        ret = []
+        q = self.query_json(query)
+        if q:
+            res = dbext.raw_sql(q)
+            base = {
+                "date": "",
+                "name": "Frentes",
+                "children": []
+            }
+            child = {
+                "name": "",
+                "children": []
+            }
+            sub_child = {
+                "name": "",
+                "size": ""
+            }
+            c = 'children'
+            for row in res:
+                for k, v in list(row.items()):
+                    if k == 'date':
+                        if len(ret) == 0 or ret[-1]['date'] != v:
+                            ret.append(base.copy())
+                            ret[-1]['date'] = v
+                            continue
+                        else:
+                            continue
+                    elif k == 'frente':
+                        if len(ret[-1]['children']) == 0 or ret[-1]['children'][-1]['name'] != v:
+                            ret[-1]['children'].append(child.copy())
+                            ret[-1]['children'][-1]['name'] = v
+                            continue
+                        else:
+                            continue
+                    elif k == 'candidato':
+                        if len(ret[-1]['children'][-1]['children']) == 0 or ret[-1]['children'][-1]['children'][-1]['name'] != v:
+                            ret[-1]['children'][-1]['children'].append(sub_child.copy())
+                            ret[-1]['children'][-1]['children'][-1]['name'] = v
+                            continue
+                        else:
+                            continue
+                    elif k == 'q_mentions':
+                        ret[-1]['children'][-1]['children'][-1]['size'] = v
+
+                    """
+                    if k == 'date' and (len(ret) == 0 or ret[-1].get('date', '') != v):
+                        # Load the date if not exists
+                        ret.append(base.copy())
+                        ret[-1][k] = v
+                    elif k == 'frente' and (
+                        len(ret[-1][c]) == 0
+                        or ret[-1][c][-1].get('name', '') != v
+                    ):
+                        # Load the "frente" if not exists
+                        ret[-1][c].append(child.copy())
+                        ret[-1][c][-1]['name'] = v
+                    elif k == 'candidato' and (
+                        len(ret[-1][c][-1][c]) == 0
+                        or ret[-1][c][-1][c][-1].get('name', '') != v
+                    ):
+                        ret[-1][c][-1][c].append(sub_child.copy())
+                        ret[-1][c][-1][c][-1]['name'] = v
+                    elif k == 'q_mentions':
+                        ret[-1][c][-1][c][-1]['q_mentions'] = v
+                    """
         else:
             ret = {'error': True}
         return self.flask.jsonify(json.dumps(ret))

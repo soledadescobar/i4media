@@ -171,6 +171,7 @@ class RestApiBridge(Bridge):
         q = self.query_json(query)
         if q:
             res = dbext.raw_sql(q)
+            """
             base = {
                 "date": "",
                 "name": "Frentes",
@@ -185,55 +186,52 @@ class RestApiBridge(Bridge):
                 "size": ""
             }
             c = 'children'
+            """
+            c = 'children'
             for row in res:
                 for k, v in list(row.items()):
                     if k == 'date':
                         if len(ret) == 0 or ret[-1]['date'] != v:
-                            ret.append(base.copy())
-                            ret[-1]['date'] = v
+                            ret.append({
+                                "date": v,
+                                "name": "Frentes",
+                                "children": []
+                            })
                             continue
                         else:
                             continue
                     elif k == 'frente':
-                        if len(ret[-1]['children']) == 0 or ret[-1]['children'][-1]['name'] != v:
-                            ret[-1]['children'].append(child.copy())
-                            ret[-1]['children'][-1]['name'] = v
+                        if len(ret[-1][c]) == 0 or ret[-1][c][-1]['name'] != v:
+                            ret[-1][c].append({
+                                "name": v,
+                                "children": []
+                            })
                             continue
                         else:
                             continue
                     elif k == 'candidato':
-                        if len(ret[-1]['children'][-1]['children']) == 0 or ret[-1]['children'][-1]['children'][-1]['name'] != v:
-                            ret[-1]['children'][-1]['children'].append(sub_child.copy())
-                            ret[-1]['children'][-1]['children'][-1]['name'] = v
+                        if len(ret[-1][c][-1][c]) == 0 or ret[-1][c][-1][c][-1]['name'] != v:
+                            ret[-1][c][-1][c].append({
+                                "name": v,
+                                "size": ""
+                            })
                             continue
                         else:
                             continue
                     elif k == 'q_mentions':
-                        ret[-1]['children'][-1]['children'][-1]['size'] = v
+                        ret[-1][c][-1][c][-1]['size'] = v
+                        break
 
-                    """
-                    if k == 'date' and (len(ret) == 0 or ret[-1].get('date', '') != v):
-                        # Load the date if not exists
-                        ret.append(base.copy())
-                        ret[-1][k] = v
-                    elif k == 'frente' and (
-                        len(ret[-1][c]) == 0
-                        or ret[-1][c][-1].get('name', '') != v
-                    ):
-                        # Load the "frente" if not exists
-                        ret[-1][c].append(child.copy())
-                        ret[-1][c][-1]['name'] = v
-                    elif k == 'candidato' and (
-                        len(ret[-1][c][-1][c]) == 0
-                        or ret[-1][c][-1][c][-1].get('name', '') != v
-                    ):
-                        ret[-1][c][-1][c].append(sub_child.copy())
-                        ret[-1][c][-1][c][-1]['name'] = v
-                    elif k == 'q_mentions':
-                        ret[-1][c][-1][c][-1]['q_mentions'] = v
-                    """
         else:
             ret = {'error': True}
+        """
+        response = self.app.response_class(
+            response=json.dumps(ret),
+            status=200,
+            mimetype='application/json'
+        )
+        """
+        #  return response
         return self.flask.jsonify(json.dumps(ret))
 
     def get_flare_v1(self, query, headers='id,value', base='flare'):

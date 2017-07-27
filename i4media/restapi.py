@@ -171,22 +171,6 @@ class RestApiBridge(Bridge):
         q = self.query_json(query)
         if q:
             res = dbext.raw_sql(q)
-            """
-            base = {
-                "date": "",
-                "name": "Frentes",
-                "children": []
-            }
-            child = {
-                "name": "",
-                "children": []
-            }
-            sub_child = {
-                "name": "",
-                "size": ""
-            }
-            c = 'children'
-            """
             c = 'children'
             for row in res:
                 for k, v in list(row.items()):
@@ -224,14 +208,6 @@ class RestApiBridge(Bridge):
 
         else:
             ret = {'error': True}
-        """
-        response = self.app.response_class(
-            response=json.dumps(ret),
-            status=200,
-            mimetype='application/json'
-        )
-        """
-        #  return response
         return self.flask.jsonify(json.dumps(ret))
 
     def get_flare_v1(self, query, headers='id,value', base='flare'):

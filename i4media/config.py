@@ -35,6 +35,8 @@ try:
 except:
     # If that level doesn't exist in logging class, use default value
     logging_level = logging.DEBUG
-logging.basicConfig(filename=LOG_FILE, level=logging_level)
+#
+LOG_FILE = '/tmp/i4media.log'
+logging.basicConfig(filename=LOG_FILE, level=logging_level, stream=sys.stdout)
 
 del(i, k, v, value, config_file)

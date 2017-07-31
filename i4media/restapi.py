@@ -2,6 +2,7 @@
 import os
 import datetime
 import json
+from flask import request
 # i4media Imports
 from .core import *
 import dbext
@@ -31,13 +32,22 @@ class RestApiBridge(Bridge):
         def get_json_cascade(query):
             return self.get_json_cascade(query)
 
-        @self.app.route("/get/json/<query>")
+        @self.app.route("/get/json/<query>", methods=['POST', 'GET'])
         def get_json(query):
-            return self.get_json(query)
+            return self.get_json(query, True if self.flask.request.method == 'POST' else False)
 
         @self.app.route("/get/flare/v1/<query>")
         def get_flare_v1(query):
             return self.get_flare_v1(query)
+
+        # Flare exclusivo para bubble charts
+        @self.app.route("/get/flare/bc/<query>", methods=['POST', 'GET'])
+        def get_flare_bc(query):
+            return self.get_flare_v2(
+                query,
+                'id,value,screenName,nombreCandidato',
+                ['frente', 'bloque', 'candidato'],
+                ['menciones', 'screenName', 'nombreCandidato'])
 
         @self.app.route("/get/flare/nobase/<query>")
         def get_flare_nobase(query):
@@ -145,20 +155,28 @@ class RestApiBridge(Bridge):
                 "attachment; filename=data.tsv"}
         )
 
-    def get_json(self, query):
-        cache = self.cache_read(query, 'json')
-        if cache:
-            return self.flask.jsonify(json.dumps(cache))
+    def get_json(self, query, params=False):
+        if params is False:
+            cache = self.cache_read(query, 'json')
+            if cache:
+                return self.flask.jsonify(json.dumps(cache))
         ret = []
         q = self.query_json(query)
         if q:
+            if params:
+                #  Procesar query con parametros
+                # self.flask.Request.get_json()
+                data = request.data
+                r = json.loads(data)
+                q = q.format(**r)
             res = dbext.raw_sql(q)
             for row in res:
                 arr = {}
                 for k, v in list(row.items()):
                     arr[k] = v
                 ret.append(arr)
-            self.cache_write(query, 'json', ret)
+            if params is False:
+                self.cache_write(query, 'json', ret)
         else:
             ret = {'error': True}
         return self.flask.jsonify(json.dumps(ret))
@@ -209,6 +227,43 @@ class RestApiBridge(Bridge):
         else:
             ret = {'error': True}
         return self.flask.jsonify(json.dumps(ret))
+
+    def get_flare_v2(self, query, headers=None, params=[], values=[]):
+        q = self.query_json(query)
+        if len(params) < 1 or len(values) < 1:
+            return 'Missing Params or Values'
+        if q:
+            data = request.data
+            r = json.loads(data)
+            q = q.format(**r)
+            res = dbext.raw_sql(q)
+            if len(res) < 1:
+                return 'None'
+                # FLARE START #
+            ret = '%s\n' % headers if headers else ''
+            for row in res:
+                count = 0
+                for k, v in list(row.items()):
+                    if k in params:
+                        print(type(v))
+                        ret += "%s%s" % (
+                            '.' if count > 0 else '',
+                            v.replace(' ', '') if type(v) == str or type(v) == unicode else v)
+                        count += 1
+                        continue
+                    elif k in values:
+                        print(type(v))
+                        ret += "%s%s" % (
+                            ',',
+                            v.replace(' ', '') if type(v) == str or type(v) == unicode else v)
+                        continue
+                ret += '\n'
+                return self.flask.Response(
+                    ret,
+                    mimetype="text/csv",
+                    headers={
+                        "Content-disposition":
+                            "attachment; filename=flare.csv"})
 
     def get_flare_v1(self, query, headers='id,value', base='flare'):
         cache = self.cache_read(query, 'flare')

@@ -19,5 +19,5 @@
     "lista-frentes": "select frente as name, id as id from ws_frentes;",
     "filtro-bloque": "select subbloque as name, id as id from ws_subbloques where id_frente in ({idFrentes});",
     "filtro-provincias": "select provincia as name, id_prov as id from ws_provincias where id_frente in ({idFrentes}) and id_subbloque in ({idBloques});",
-    "filtro-candidatos": "select candidato as name, id as id from ws_candidatos where id_frente in ({idFrentes}) and id_subbloque in ({idBloques}) and id_provincia in ({idProvincias});"
+    "filtro-candidatos": "select candidato as name, id as id, candidato as \"screenName\" from ws_candidatos where id_frente in ({idFrentes}) and id_subbloque in ({idBloques}) and id_provincia in ({idProvincias});"
 }

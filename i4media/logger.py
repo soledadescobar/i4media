@@ -1,8 +1,9 @@
+import logging
 import logging.handlers
 import sys
 
 
-LOG_FILENAME = "/tmp/i4media.log"
+LOG_FILENAME = "stdout.log"
 LOG_LEVEL = logging.DEBUG
 logger = logging.getLogger(__name__)
 logger.setLevel(LOG_LEVEL)

@@ -250,13 +250,11 @@ class RestApiBridge(Bridge):
                             '.' if count > 0 else '',
                             v.replace(' ', '') if type(v) == str or type(v) == unicode else v)
                         count += 1
-                        continue
                     elif k in values:
                         print(type(v))
                         ret += "%s%s" % (
                             ',',
                             v.replace(' ', '') if type(v) == str or type(v) == unicode else v)
-                        continue
                 ret += '\n'
                 return self.flask.Response(
                     ret,

@@ -1,7 +1,7 @@
 import json
 import os
+from .logger import *
 import sys
-import logging
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,15 +28,15 @@ for i in CONFIG:
     elif type(CONFIG[i]) == str or type(CONFIG[i]) == unicode:
         exec('%s = "%s"' % (str(i).upper(), CONFIG[i]))
 
-# Try to get Log Level from config file variable
-try:
-    logging_level = ''
-    exec ("logging_level = logging.%s" % LOG_LEVEL.upper())
-except:
-    # If that level doesn't exist in logging class, use default value
-    logging_level = logging.DEBUG
-#
-LOG_FILE = '/tmp/i4media.log'
-logging.basicConfig(filename=LOG_FILE, level=logging_level, stream=sys.stdout)
+# # Try to get Log Level from config file variable
+# try:
+#     logging_level = ''
+#     exec ("logging_level = logging.%s" % LOG_LEVEL.upper())
+# except:
+#     # If that level doesn't exist in logging class, use default value
+#     logging_level = logging.DEBUG
+# #
+# LOG_FILE = '/tmp/i4media.log'
+# logging.basicConfig(filename=LOG_FILE, level=logging_level, stream=sys.stdout)
 
 del(i, k, v, value, config_file)

@@ -256,12 +256,12 @@ class RestApiBridge(Bridge):
                             ',',
                             v.replace(' ', '') if type(v) == str or type(v) == unicode else v)
                 ret += '\n'
-                return self.flask.Response(
-                    ret,
-                    mimetype="text/csv",
-                    headers={
-                        "Content-disposition":
-                            "attachment; filename=flare.csv"})
+            return self.flask.Response(
+                ret,
+                mimetype="text/csv",
+                headers={
+                    "Content-disposition":
+                        "attachment; filename=flare.csv"})
 
     def get_flare_v1(self, query, headers='id,value', base='flare'):
         cache = self.cache_read(query, 'flare')

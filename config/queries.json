@@ -18,6 +18,6 @@
     "treemap-1": "select to_char (to_date(tw.created_at, 'Dy mon DD HH24:MI:SS \"+0000\" YYYY'), 'W') || ',' || extract( month from to_date(tw.created_at, 'Dy mon DD HH24:MI:SS \"+0000\" YYYY'))   as date ,st.frente_bloque as frente ,cc.candidato as candidato ,count(um.id_tweet) as q_mentions from user_mentions um join tweets tw on (um.id_tweet = tw.id_tweet)     join candidatos_cuentas cc on (lower(um.screen_name) = lower(cc.screen_name) ) join st_listas st  on (lower(cc.candidato) = lower(st.candidato)) group by 1,2,3;",
     "lista-frentes": "select frente as name, id as id from ws_frentes;",
     "filtro-bloque": "select subbloque as name, id as id from ws_subbloques where id_frente in ({idFrentes});",
-    "filtro-provincias": "select pv.provincia as name, pv.id as id from ws_provincias pv join ws_candidatos can on (can.id_provincia = pv.id) where can.id_frente in ({idFrentes}) and can.id_subbloque in ({idBloques});",
+    "filtro-provincias": "select pv.provincia as name, pv.id as id from ws_provincias pv join ws_candidatos can on (can.id_provincia = pv.id) where can.id_frente in ({idFrentes}) and can.id_subbloque in ({idBloques}) group by 1,2 order by 1 asc;",
     "filtro-candidatos": "select candidato as name, id as id, screen_name as \"screenName\" from ws_candidatos where id_frente in ({idFrentes}) and id_subbloque in ({idBloques}) and id_provincia in ({idProvincias});"
 }

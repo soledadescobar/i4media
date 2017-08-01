@@ -8,7 +8,7 @@
     "pass": "gabriel"
   },
   "redis": {
-    "host": "localhost",
+    "host": "10.128.0.11",
     "port": "6379",
     "user": "",
     "pass": ""
@@ -18,14 +18,14 @@
     "port": "5000"
   },
   "db": {
-    "engine": "postgres",
+    "engine": "postgresql",
     "user": "pst",
     "pass": "bP9GZY3GXz4ePrPX",
     "name": "i4media_phase1",
-    "host": "104.197.148.208"
+    "host": "10.128.0.3"
   },
   "log": {
-    "file": "output.log",
+    "file": "/tmp/i4media.log",
     "level": "debug"
   },
   "global": {

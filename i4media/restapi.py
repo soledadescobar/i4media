@@ -234,6 +234,7 @@ class RestApiBridge(Bridge):
 
         else:
             ret = {'error': True}
+        self.cache_write(query, 'json', ret)
         return self.flask.jsonify(json.dumps(ret))
 
     def get_flare_v2(self, query, headers=None, params=[], values=[]):
@@ -253,13 +254,11 @@ class RestApiBridge(Bridge):
                 count = 0
                 for k, v in list(row.items()):
                     if k in params:
-                        print(type(v))
                         ret += "%s%s" % (
                             '.' if count > 0 else '',
                             v.replace(' ', '') if type(v) == str or type(v) == unicode else v)
                         count += 1
                     elif k in values:
-                        print(type(v))
                         ret += "%s%s" % (
                             ',',
                             v.replace(' ', '') if type(v) == str or type(v) == unicode else v)

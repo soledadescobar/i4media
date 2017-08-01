@@ -52,3 +52,5 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 del(i, k, v, value, config_file)
+
+logger.info('i4media Configuration Loaded')

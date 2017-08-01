@@ -1,7 +1,7 @@
 import json
 import os
-from .logcfg import *
 import sys
+import logging.handlers
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,14 +29,26 @@ for i in CONFIG:
         exec('%s = "%s"' % (str(i).upper(), CONFIG[i]))
 
 # # Try to get Log Level from config file variable
-# try:
-#     logging_level = ''
-#     exec ("logging_level = logging.%s" % LOG_LEVEL.upper())
-# except:
-#     # If that level doesn't exist in logging class, use default value
-#     logging_level = logging.DEBUG
-# #
+try:
+    logging_level = ''
+    exec ("logging_level = logging.%s" % LOG_LEVEL.upper())
+except:
+    # If that level doesn't exist in logging class, use default value
+    logging_level = logging.DEBUG
+#
 # LOG_FILE = '/tmp/i4media.log'
 # logging.basicConfig(filename=LOG_FILE, level=logging_level, stream=sys.stdout)
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging_level)
+handler = logging.handlers.TimedRotatingFileHandler(LOG_FILE, when="midnight", backupCount=3)
+formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+# STDOUT
+ch = logging.StreamHandler(sys.stdout)
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 del(i, k, v, value, config_file)

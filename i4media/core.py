@@ -1,5 +1,5 @@
 import redis
-import logging
+import logging.handlers
 import time
 import multiprocessing as mp
 import flask
@@ -26,6 +26,17 @@ class Bridge(object):
         self.flask = flask
         self.app = flask.Flask(__name__)
         self.app.config['PROPAGATE_EXCEPTIONS'] = True
+        # logger = logging.getLogger(__name__)
+        handler = logging.handlers.TimedRotatingFileHandler(LOG_FILE, when="midnight", backupCount=3)
+        handler.setLevel(LOGGING_LEVEL)
+        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+        handler.setFormatter(formatter)
+        # logger.addHandler(handler)
+        # STDOUT
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setLevel(logging.DEBUG)
+        ch.setFormatter(formatter)
+        # logger.addHandler(ch)
         self.app.logger.addHandler(handler)
         self.app.logger.addHandler(ch)
         CORS(self.app)

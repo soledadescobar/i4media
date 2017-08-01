@@ -3,6 +3,7 @@ import os
 import datetime
 import json
 from flask import request
+from flask_cors import cross_origin
 # i4media Imports
 from .core import *
 import dbext
@@ -21,27 +22,33 @@ class RestApiBridge(Bridge):
             return self.app.jsonify({'status': 'success'})
         """
         @self.app.route("/get/query/<query>")
+        @cross_origin()
         def get_query(query):
             return self.get_query(query)
 
         @self.app.route("/get/tsv/<query>")
+        @cross_origin()
         def get_tsv(query):
             return self.get_tsv(query)
 
         @self.app.route("/get/json/cascade/<query>")
+        @cross_origin()
         def get_json_cascade(query):
             return self.get_json_cascade(query)
 
         @self.app.route("/get/json/<query>", methods=['POST', 'GET'])
+        @cross_origin()
         def get_json(query):
             return self.get_json(query, True if self.flask.request.method == 'POST' else False)
 
         @self.app.route("/get/flare/v1/<query>")
+        @cross_origin()
         def get_flare_v1(query):
             return self.get_flare_v1(query)
 
         # Flare exclusivo para bubble charts
         @self.app.route("/get/flare/bc/<query>", methods=['POST', 'GET'])
+        @cross_origin()
         def get_flare_bc(query):
             return self.get_flare_v2(
                 query,
@@ -50,6 +57,7 @@ class RestApiBridge(Bridge):
                 ['menciones', 'screenName', 'nombreCandidato'])
 
         @self.app.route("/get/flare/nobase/<query>")
+        @cross_origin()
         def get_flare_nobase(query):
             return self.get_flare_v1(query, base=None)
 

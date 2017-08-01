@@ -25,6 +25,7 @@ class Bridge(object):
         # Load Needed Flask Functions for Bridge Extensions
         self.flask = flask
         self.app = flask.Flask(__name__)
+        self.app.config['PROPAGATE_EXCEPTIONS'] = True
         CORS(self.app)
         # CORS(
         #     self.app,

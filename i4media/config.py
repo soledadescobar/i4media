@@ -38,19 +38,19 @@ except:
 #
 # LOG_FILE = '/tmp/i4media.log'
 # logging.basicConfig(filename=LOG_FILE, level=logging_level, stream=sys.stdout)
-
-logger = logging.getLogger(__name__)
-handler = logging.handlers.TimedRotatingFileHandler(LOG_FILE, when="midnight", backupCount=3)
-handler.setLevel(LOGGING_LEVEL)
-formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# STDOUT
-ch = logging.StreamHandler(sys.stdout)
-ch.setLevel(logging.DEBUG)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+#
+# logger = logging.getLogger(__name__)
+# handler = logging.handlers.TimedRotatingFileHandler(LOG_FILE, when="midnight", backupCount=3)
+# handler.setLevel(LOGGING_LEVEL)
+# formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+# handler.setFormatter(formatter)
+# logger.addHandler(handler)
+# # STDOUT
+# ch = logging.StreamHandler(sys.stdout)
+# ch.setLevel(logging.DEBUG)
+# ch.setFormatter(formatter)
+# logger.addHandler(ch)
 
 del(i, k, v, value, config_file)
 
-logger.info('i4media Configuration Loaded')
+# logger.info('i4media Configuration Loaded')

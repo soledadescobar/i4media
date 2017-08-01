@@ -9,7 +9,7 @@ import twitter
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-# from raven.contrib.flask import Sentry
+from raven.contrib.flask import Sentry
 
 from .config import *
 
@@ -26,9 +26,9 @@ class Bridge(object):
         # Load Needed Flask Functions for Bridge Extensions
         self.flask = flask
         self.app = flask.Flask(__name__)
-        # sentry = Sentry(
-        #     self.app,
-        #     dsn='https://7b8c5989c8ce4e0e8a596864aecb630c:bd9a209aba8547c4a6689c6f4428ee13@sentry.io/198489')
+        sentry = Sentry(
+            self.app,
+            dsn='https://7b8c5989c8ce4e0e8a596864aecb630c:bd9a209aba8547c4a6689c6f4428ee13@sentry.io/198489')
         CORS(self.app)
         # CORS(
         #     self.app,

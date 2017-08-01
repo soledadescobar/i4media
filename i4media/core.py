@@ -25,11 +25,12 @@ class Bridge(object):
         # Load Needed Flask Functions for Bridge Extensions
         self.flask = flask
         self.app = flask.Flask(__name__)
-        CORS(
-            self.app,
-            resources={
-                r"/get/*": {
-                    "origins": "*"}})
+        CORS(self.app)
+        # CORS(
+        #     self.app,
+        #     resources={
+        #         r"/get/*": {
+        #            "origins": "*"}})
         # WTF_CSRF_SECRET_KEY = 'TOKEN'
         # self.csrf = CSRFProtect(self.app)
 

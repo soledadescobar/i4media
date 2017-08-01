@@ -1,5 +1,5 @@
 import redis
-import logging.handlers
+# import logging.handlers
 import time
 import multiprocessing as mp
 import flask
@@ -9,6 +9,7 @@ import twitter
 import requests
 from requests.auth import HTTPBasicAuth
 import json
+from raven.contrib.flask import Sentry
 
 from .config import *
 
@@ -25,20 +26,23 @@ class Bridge(object):
         # Load Needed Flask Functions for Bridge Extensions
         self.flask = flask
         self.app = flask.Flask(__name__)
-        self.app.config['PROPAGATE_EXCEPTIONS'] = True
-        # logger = logging.getLogger(__name__)
-        handler = logging.handlers.TimedRotatingFileHandler(LOG_FILE, when="midnight", backupCount=3)
-        handler.setLevel(LOGGING_LEVEL)
-        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-        handler.setFormatter(formatter)
-        # logger.addHandler(handler)
-        # STDOUT
-        ch = logging.StreamHandler(sys.stdout)
-        ch.setLevel(logging.DEBUG)
-        ch.setFormatter(formatter)
-        # logger.addHandler(ch)
-        self.app.logger.addHandler(handler)
-        self.app.logger.addHandler(ch)
+        # self.app.config['PROPAGATE_EXCEPTIONS'] = True
+        # # logger = logging.getLogger(__name__)
+        # handler = logging.handlers.TimedRotatingFileHandler(LOG_FILE, when="midnight", backupCount=3)
+        # handler.setLevel(LOGGING_LEVEL)
+        # formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+        # handler.setFormatter(formatter)
+        # # logger.addHandler(handler)
+        # # STDOUT
+        # ch = logging.StreamHandler(sys.stdout)
+        # ch.setLevel(logging.DEBUG)
+        # ch.setFormatter(formatter)
+        # # logger.addHandler(ch)
+        # self.app.logger.addHandler(handler)
+        # self.app.logger.addHandler(ch)
+        sentry = Sentry(
+            self.app,
+            dsn='https://7b8c5989c8ce4e0e8a596864aecb630c:bd9a209aba8547c4a6689c6f4428ee13@sentry.io/198489')
         CORS(self.app)
         # CORS(
         #     self.app,

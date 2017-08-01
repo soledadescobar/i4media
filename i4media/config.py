@@ -1,6 +1,6 @@
 import json
 import os
-from .logger import *
+from .logcfg import *
 import sys
 
 

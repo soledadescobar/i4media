@@ -7,3 +7,4 @@ rest.apps()
 
 application = rest.app
 
+rest.app.logger.info('UWSGI Application Started')

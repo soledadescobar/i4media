@@ -26,6 +26,8 @@ class Bridge(object):
         self.flask = flask
         self.app = flask.Flask(__name__)
         self.app.config['PROPAGATE_EXCEPTIONS'] = True
+        self.app.logger.addHandler(handler)
+        self.app.logger.addHandler(ch)
         CORS(self.app)
         # CORS(
         #     self.app,

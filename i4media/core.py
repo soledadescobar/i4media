@@ -5,7 +5,7 @@ import multiprocessing as mp
 import flask
 from flask_cors import CORS
 # from flask_wtf.csrf import CSRFProtect
-from flask.ext.cache import Cache
+# from flask_cache import Cache
 import twitter
 import requests
 from requests.auth import HTTPBasicAuth
@@ -22,7 +22,7 @@ class Bridge(object):
     flask = None
     # csrf = None
     sentry = None
-    cache = None
+    # cache = None
     updater_request_status = 0
 
     def __init__(self):
@@ -40,7 +40,7 @@ class Bridge(object):
         #            "origins": "*"}})
         # WTF_CSRF_SECRET_KEY = 'TOKEN'
         # self.csrf = CSRFProtect(self.app)
-        self.cache = Cache(self.app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_HOST': REDIS_HOST})
+        # self.cache = Cache(self.app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_HOST': REDIS_HOST})
 
     def apps(self):
         # @self.csrf.exempt

@@ -23,38 +23,38 @@ class RestApiBridge(Bridge):
         """
         @self.app.route("/get/query/<query>")
         @cross_origin()
-        @self.cache.memoize(timeout=600)
+        # @self.cache.memoize(timeout=600)
         def get_query(query):
             return self.get_query(query)
 
         @self.app.route("/get/tsv/<query>")
         @cross_origin()
-        @self.cache.memoize(timeout=600)
+        # @self.cache.memoize(timeout=600)
         def get_tsv(query):
             return self.get_tsv(query)
 
         @self.app.route("/get/json/cascade/<query>")
         @cross_origin()
-        @self.cache.memoize(timeout=600)
+        # @self.cache.memoize(timeout=600)
         def get_json_cascade(query):
             return self.get_json_cascade(query)
 
         @self.app.route("/get/json/<query>", methods=['POST', 'GET'])
         @cross_origin()
-        @self.cache.memoize(timeout=600)
+        # @self.cache.memoize(timeout=600)
         def get_json(query):
             return self.get_json(query, True if self.flask.request.method == 'POST' else False)
 
         @self.app.route("/get/flare/v1/<query>")
         @cross_origin()
-        @self.cache.memoize(timeout=600)
+        # @self.cache.memoize(timeout=600)
         def get_flare_v1(query):
             return self.get_flare_v1(query)
 
         # Flare exclusivo para bubble charts
         @self.app.route("/get/flare/bc/<query>", methods=['POST', 'GET'])
         @cross_origin()
-        @self.cache.memoize(timeout=600)
+        # @self.cache.memoize(timeout=600)
         def get_flare_bc(query):
             return self.get_flare_v2(
                 query,
@@ -64,7 +64,7 @@ class RestApiBridge(Bridge):
 
         @self.app.route("/get/flare/nobase/<query>")
         @cross_origin()
-        @self.cache.memoize(timeout=600)
+        # @self.cache.memoize(timeout=600)
         def get_flare_nobase(query):
             return self.get_flare_v1(query, base=None)
 
@@ -81,35 +81,35 @@ class RestApiBridge(Bridge):
     # This will try to read a cache file for the specified query #
     @staticmethod
     def cache_read(query, ext):
-        # name = '%s/cache/%s.%s' % (PROJECT_ROOT, query, ext)
-        # try:
-        #     mtime = datetime.datetime.fromtimestamp(os.path.getmtime(name))
-        # except OSError:
-        #     return False
-        # if mtime > datetime.datetime.now() - datetime.timedelta(hours=3):
-        #     with open(name, 'r') as cache:
-        #         if ext == 'json' or ext == 'query':
-        #             return json.load(cache)
-        #         else:
-        #             return cache.read()
-        # else:
-        #     return False
-        return False
+        name = '%s/cache/%s.%s' % (PROJECT_ROOT, query, ext)
+        try:
+            mtime = datetime.datetime.fromtimestamp(os.path.getmtime(name))
+        except OSError:
+            return False
+        if mtime > datetime.datetime.now() - datetime.timedelta(hours=3):
+            with open(name, 'r') as cache:
+                if ext == 'json' or ext == 'query':
+                    return json.load(cache)
+                else:
+                    return cache.read()
+        else:
+            return False
+        # return False
 
     # This will write the query result to cache file #
     @staticmethod
     def cache_write(query, ext, ret):
-        # name = '%s/cache/%s.%s' % (PROJECT_ROOT, query, ext)
-        # try:
-        #     with open(name, "w") as cache:
-        #         if ext == 'tsv' or ext == 'csv':
-        #             cache.write('%s' % ret.encode('utf-8'))
-        #         if ext == 'json' or ext == 'query':
-        #             cache.write(json.dumps(ret))
-        # except IOError:
-        #     return False
-        # return True
-        pass
+        name = '%s/cache/%s.%s' % (PROJECT_ROOT, query, ext)
+        try:
+            with open(name, "w") as cache:
+                if ext == 'tsv' or ext == 'csv':
+                    cache.write('%s' % ret.encode('utf-8'))
+                if ext == 'json' or ext == 'query':
+                    cache.write(json.dumps(ret))
+        except IOError:
+            return False
+        return True
+        # pass
 
     # Return the query from queries.json #
     def get_query(self, query):

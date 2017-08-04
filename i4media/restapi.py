@@ -183,8 +183,8 @@ class RestApiBridge(Bridge):
             if params:
                 #  Procesar query con parametros
                 # self.flask.Request.get_json()
-                data = request.data
-                r = json.loads(data)
+                # data = request.data
+                r = request.get_json(force=True)
                 q = q.format(**r)
             res = dbext.raw_sql(q)
             for row in res:
@@ -251,8 +251,8 @@ class RestApiBridge(Bridge):
         if len(params) < 1 or len(values) < 1:
             return 'Missing Params or Values'
         if q:
-            data = request.data
-            r = json.loads(data)
+            # data = request.data
+            r = request.get_json(force=True)
             q = q.format(**r)
             res = dbext.raw_sql(q)
             if len(res) < 1:

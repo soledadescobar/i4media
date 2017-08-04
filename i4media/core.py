@@ -5,6 +5,7 @@ import multiprocessing as mp
 import flask
 from flask_cors import CORS
 # from flask_wtf.csrf import CSRFProtect
+from flask.ext.cache import Cache
 import twitter
 import requests
 from requests.auth import HTTPBasicAuth
@@ -20,13 +21,15 @@ class Bridge(object):
     services = []
     flask = None
     # csrf = None
+    sentry = None
+    cache = None
     updater_request_status = 0
 
     def __init__(self):
         # Load Needed Flask Functions for Bridge Extensions
         self.flask = flask
         self.app = flask.Flask(__name__)
-        sentry = Sentry(
+        self.sentry = Sentry(
             self.app,
             dsn='https://7b8c5989c8ce4e0e8a596864aecb630c:bd9a209aba8547c4a6689c6f4428ee13@sentry.io/198489')
         CORS(self.app)
@@ -37,6 +40,7 @@ class Bridge(object):
         #            "origins": "*"}})
         # WTF_CSRF_SECRET_KEY = 'TOKEN'
         # self.csrf = CSRFProtect(self.app)
+        self.cache = Cache(self.app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_HOST': REDIS_HOST})
 
     def apps(self):
         # @self.csrf.exempt

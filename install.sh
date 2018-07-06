@@ -51,11 +51,13 @@ cd i4media
 echo "${BLUE}Installing PIP Requirements${RESET}"
 sudo -H pip3 install -r requirements.txt
 
+echo "${BLUE}Installing Streaming Service${RESET}"
 chmod +x install-stream.sh
-./install-stream.sh
+. ./install-stream.sh
 
 if [ "$OUTPUT_FOLDER" != "$DEFAULT_FOLDER" ]; then
     echo "${RED}You are not using the default folder. Remember to edit /etc/init.d/i4media.twitter-stream.sh with the fixed path${RESET}"
+    echo "${BLUE}Change${RED} '${DEFAULT_FOLDER}' ${BLUE}for${GREEN} '${OUTPUT_FOLDER}' ${RESET}"
 fi
 
 echo "${GREEN}Finish${RESET}"

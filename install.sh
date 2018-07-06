@@ -51,6 +51,9 @@ cd i4media
 echo "${BLUE}Installing PIP Requirements${RESET}"
 sudo -H pip3 install -r requirements.txt
 
+echo "${BLUE}Installing Raven${RESET}"
+sudo -H pip3 install raven
+
 echo "${BLUE}Installing Streaming Service${RESET}"
 chmod +x install-stream.sh
 . ./install-stream.sh
